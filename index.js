@@ -58,6 +58,34 @@ app.post("/api/books", async (req, res) => {
     res.status(500).json({ error: "Failed to add book" });
   }
 });
+
+// 5. Update a book by ID in MySQL
+app.put("/api/books/:id", async (req, res) => {
+  try {
+    const { title, author, isbn } = req.body;
+
+    if (!title || !author) {
+      return res.status(400).json({ error:"Title and author are required" });
+    }
+    const [result] = await pool.query(
+      "UPDATE books SET title = ?, author = ?, isbn = ? WHERE id = ?",
+      [title, author, isbn || null, req.params.id]
+    );
+    if (result.affectedRows === 0) {
+      return res.status(404).json({ error: "Book not found to update"});
+    }
+
+    res.json({
+      id: parseInt(req.params.id),
+      title,
+      author,
+      isbn: isbn || null
+    });
+  } catch (error) {
+    console.error("Failed to update book:", error);
+    res.status(500).json({ error: "Failed to update book" });
+  }
+});
 // 4. Delete a book by ID from MySQL
 app.delete("/api/books/:id", async (req, res) => {
   try {
