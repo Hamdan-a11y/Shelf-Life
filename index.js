@@ -191,6 +191,45 @@ app.get("/api/users/:userId/shelf/:bookId", async (req, res) => {
     res.status(500).json({ error: "Failed to fetch book details" });
   }
 });
+// 10. Add a new book AND place it directly on a user's shelf
+app.post("/api/users/:userId/shelf", async (req, res) => {
+  try {
+    const { userId } = req.params;
+    const { title, author, isbn, status } = req.body;
+
+    if (!title || !author) {
+      return res.status(400).json({ error: "Title and author are required" });
+    }
+
+    // Step 1: Insert into books table
+    const [bookResult] = await pool.query(
+      "INSERT INTO books (title, author, isbn) VALUES (?, ?, ?)",
+      [title, author, isbn || null]
+    );
+
+    const newBookId = bookResult.insertId;
+
+    // Step 2: Insert into shelves junction table
+    const shelfStatus = status || "want_to_read";
+    const [shelfResult] = await pool.query(
+      "INSERT INTO shelves (user_id, book_id, status) VALUES (?, ?, ?)",
+      [userId, newBookId, shelfStatus]
+    );
+
+    res.status(201).json({
+      shelf_entry_id: shelfResult.insertId,
+      user_id: parseInt(userId),
+      book_id: newBookId,
+      title,
+      author,
+      isbn: isbn || null,
+      status: shelfStatus
+    });
+  } catch (error) {
+    console.error("Failed to add book to user shelf:", error);
+    res.status(500).json({ error: "Failed to add book to shelf" });
+  }
+});
 
 // Start the server
 app.listen(PORT, () => {
