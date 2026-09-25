@@ -149,6 +149,46 @@ app.get("/api/reflections/book/:bookId", async (req, res) => {
     res.status(500).json({ error: "Failed to fetch reflections" });
   }
 });
+// 9. COMBINED ENDPOINT: MySQL (Book & Shelf) + MongoDB (Reflections)
+app.get("/api/users/:userId/shelf/:bookId", async (req, res) => {
+  try {
+    const { userId, bookId } = req.params;
+
+    // 1. Fetch from MySQL
+    const mysqlQuery = `
+      SELECT 
+        shelves.id AS shelf_entry_id,
+        shelves.status,
+        shelves.date_added,
+        books.id AS book_id,
+        books.title,
+        books.author,
+        books.isbn
+      FROM shelves
+      INNER JOIN books ON shelves.book_id = books.id
+      WHERE shelves.user_id = ? AND books.id = ?
+    `;
+
+    const [rows] = await pool.query(mysqlQuery, [userId, bookId]);
+
+    if (rows.length === 0) {
+      return res.status(404).json({ error: "Book not found on this user's shelf" });
+    }
+
+    // 2. Fetch from MongoDB
+    const reflections = await Reflection.find({ user_id: userId, book_id: bookId }).sort({ readNumber: 1 });
+
+    // 3. Combine both into one response!
+    res.json({
+      book: rows[0],
+      total_reads: reflections.length,
+      reflections: reflections
+    });
+  } catch (error) {
+    console.error("Failed to fetch combined book details:", error);
+    res.status(500).json({ error: "Failed to fetch book details" });
+  }
+});
 
 // Start the server
 app.listen(PORT, () => {
