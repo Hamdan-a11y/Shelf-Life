@@ -6,6 +6,8 @@ connectMongoDB();
 const Reflection = require("./models/Reflection");
 
 app.use(express.json());
+const cors = require("cors");
+app.use(cors());
 
 const PORT = 3000;
 

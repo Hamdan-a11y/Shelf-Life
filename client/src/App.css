@@ -5,3 +5,125 @@
 .header p {
   color: black;
 }
+.book-card {
+  border: 1px solid #ddd;
+  border-radius: 6px;
+  padding: 12px 16px;
+  margin: 12px 0;
+  background-color: #f9f9f9;
+  color: #333;
+}
+
+.book-card h3 {
+  margin: 0 0 6px 0;
+}
+
+.book-status {
+  font-weight: bold;
+}
+.error-msg {
+  color: #ef4444;
+  font-weight: 500;
+  background-color: #fee2e2;
+  padding: 8px 12px;
+  border-radius: 4px;
+}
+
+.loading-msg {
+  color: #64748b;
+  font-style: italic;
+}
+.clickable {
+  cursor: pointer;
+  transition: transform 0.15s ease, border-color 0.15s ease;
+}
+
+.clickable:hover {
+  transform: translateY(-2px);
+  border-color: #3b82f6;
+}
+
+.reflections-container {
+  margin-top: 30px;
+  padding: 16px;
+  background-color: #f1f5f9;
+  border-radius: 8px;
+  border: 1px solid #cbd5e1;
+}
+
+.reflections-container h3 {
+  margin-top: 0;
+  color: #1e293b;
+}
+
+.total-reads {
+  color: #475569;
+  font-weight: bold;
+}
+
+.reflection-card {
+  background: white;
+  border: 1px solid #e2e8f0;
+  border-radius: 6px;
+  padding: 12px;
+  margin-bottom: 12px;
+  color: #334155;
+}
+
+.reflection-card h4 {
+  margin: 0 0 8px 0;
+  color: #0f172a;
+}
+
+.quote {
+  font-style: italic;
+  color: #475569;
+  border-left: 3px solid #3b82f6;
+  margin: 8px 0;
+  padding-left: 10px;
+}
+.reflection-form {
+  background-color: white;
+  padding: 20px;
+  margin-top: 14px;
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+}
+
+.reflection-form h4 {
+  margin: 0;
+}
+
+.reflection-form label {
+  display: flex;
+  flex-direction: column;
+  font-weight: 500;
+  
+  font-size: 0.9rem;
+  gap: 3px;
+}
+
+.reflection-form input,
+.reflection-form textarea {
+  padding: 8px;
+  border: 1px solid #cbd5e1;
+  border-radius: 4px;
+  font-family: inherit;
+  font-size: 0.95rem;
+}
+
+.reflection-form button {
+  background-color: gray;
+  color: white;
+  border: 1px;
+  padding: 10px 14px;
+  border-radius: 5px;
+  cursor: pointer;
+  font-weight: 600;
+  margin-top: 6px;
+}
+
+.reflection-form button:hover {
+  background-color: black;
+}
