@@ -139,6 +139,17 @@ app.post("/api/reflections", async (req, res) => {
     res.status(400).json({ error: error.message });
   }
 });
+// 8. Get all reflections for a specific book from MongoDB
+app.get("/api/reflections/book/:bookId", async (req, res) => {
+  try {
+    const reflections = await Reflection.find({ book_id: req.params.bookId }).sort({ readNumber: 1 });
+    res.json(reflections);
+  } catch (error) {
+    console.error("Failed to fetch reflections:", error);
+    res.status(500).json({ error: "Failed to fetch reflections" });
+  }
+});
+
 // Start the server
 app.listen(PORT, () => {
   console.log(`ShelfLife server is running on http://localhost:${PORT}`);
