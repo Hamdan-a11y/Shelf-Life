@@ -1,6 +1,9 @@
 const express = require("express");
 const app = express();
 const pool = require("./db");
+const connectMongoDB = require("./mongo");
+connectMongoDB();
+const Reflection = require("./models/Reflection");
 
 app.use(express.json());
 
@@ -101,7 +104,41 @@ app.delete("/api/books/:id", async (req, res) => {
     res.status(500).json({ error: "Failed to delete book" });
   }
 });
+// 6. Get a user's shelf (with book details via SQL JOIN)
+app.get("/api/users/:id/shelf", async (req, res) => {
+  try {
+    const query = `
+      SELECT 
+        shelves.id AS shelf_entry_id,
+        shelves.status,
+        shelves.date_added,
+        books.id AS book_id,
+        books.title,
+        books.author,
+        books.isbn
+      FROM shelves
+      INNER JOIN books ON shelves.book_id = books.id
+      WHERE shelves.user_id = ?
+    `;
 
+    const [rows] = await pool.query(query, [req.params.id]);
+    res.json(rows);
+  } catch (error) {
+    console.error("Failed to fetch user shelf:", error);
+    res.status(500).json({ error: "Failed to fetch user shelf" });
+  }
+});
+//7. Add a new reflection (diary entry) to MongoDB
+app.post("/api/reflections", async (req, res) => {
+  try {
+    const reflection = await
+  Reflection.create(req.body);
+    res.status(201).json(reflection);  
+  } catch (error) {
+    console.error("Failed to create reflection:", error);
+    res.status(400).json({ error: error.message });
+  }
+});
 // Start the server
 app.listen(PORT, () => {
   console.log(`ShelfLife server is running on http://localhost:${PORT}`);
