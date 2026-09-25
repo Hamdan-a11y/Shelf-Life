@@ -45,10 +45,9 @@ function AddReflectionForm({ bookId, onReflectionAdded, nextReadNumber }) {
   return (
     <form className="reflection-form" onSubmit={handleSubmit}>
       <div className="reflection-form-header">
-        <div className="reflection-form-badge">Read #{nextReadNumber || 1}</div>
         <div>
-          <h4>Log a New Reflection / Re-read</h4>
-          <p className="reflection-form-subtext">Record your impressions, state of mind, and takeaways</p>
+          <h4>Log Read #{nextReadNumber || 1} Reflection</h4>
+          <p className="reflection-form-subtext">Record your impressions, mood, and personal takeaways</p>
         </div>
       </div>
 

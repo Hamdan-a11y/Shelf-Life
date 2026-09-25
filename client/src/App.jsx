@@ -52,12 +52,12 @@ function App() {
 
   return (
     <div className="shelf-app">
-      {/* Top Masthead */}
+      {/* Full-width Top Masthead */}
       <header className="app-masthead">
         <div className="masthead-inner">
           <div className="brand-group">
             <div className="brand-symbol" aria-hidden="true">
-              <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2">
+              <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2">
                 <path d="M4 19.5A2.5 2.5 0 0 1 6.5 17H20" strokeLinecap="round" strokeLinejoin="round" />
                 <path d="M6.5 2H20v20H6.5A2.5 2.5 0 0 1 4 19.5v-15A2.5 2.5 0 0 1 6.5 2z" strokeLinecap="round" strokeLinejoin="round" />
               </svg>
@@ -68,9 +68,9 @@ function App() {
             </div>
           </div>
 
-          <div className="user-profile-badge">
+          <div className="user-profile-meta">
             <span className="user-avatar" aria-hidden="true">A</span>
-            <div className="user-meta">
+            <div className="user-details">
               <span className="user-greeting">Welcome back, <strong>Alice</strong></span>
               <span className="shelf-counter">
                 {books.length} {books.length === 1 ? "volume" : "volumes"} on shelf
@@ -80,9 +80,9 @@ function App() {
         </div>
       </header>
 
-      {/* Main Content Workspace */}
+      {/* Main Content Workspace - fills screen and balanced */}
       <main className="app-main-layout">
-        {/* Left Column: Shelf & Catalog */}
+        {/* Left Column: Catalog & Shelf */}
         <section className="shelf-column" aria-label="Bookshelf and catalog">
           <AddBookForm onBookAdded={handleBookAdded} />
 

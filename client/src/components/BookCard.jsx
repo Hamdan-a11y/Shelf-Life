@@ -21,11 +21,12 @@ function BookCard({ title, author, status, isSelected, onClick }) {
           <h3 className="book-title">{title}</h3>
           {status && (
             <span
-              className={`book-status-badge status-${normalizedStatus.replace(
+              className={`book-status-tag status-${normalizedStatus.replace(
                 /\s+/g,
                 "-"
               )}`}
             >
+              <span className="status-indicator-dot" aria-hidden="true" />
               {status}
             </span>
           )}

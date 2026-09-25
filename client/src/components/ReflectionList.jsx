@@ -11,7 +11,7 @@ function ReflectionList({ history }) {
             <p className="reflections-book-author">by {history.book.author}</p>
           )}
         </div>
-        <div className="total-reads-badge">
+        <div className="total-reads-counter">
           <span className="total-reads-num">{history.total_reads}</span>
           <span className="total-reads-label">
             {history.total_reads === 1 ? "Read Completed" : "Reads Completed"}
@@ -30,7 +30,8 @@ function ReflectionList({ history }) {
           {history.reflections.map((ref) => (
             <article key={ref._id} className="reflection-card">
               <div className="reflection-card-meta">
-                <span className="read-number-badge">Read #{ref.readNumber}</span>
+                <span className="read-number-text">Read #{ref.readNumber}</span>
+                <span className="meta-separator" aria-hidden="true">·</span>
                 <span
                   className="rating-stars"
                   aria-label={`Rating: ${ref.rating} out of 5 stars`}
@@ -40,10 +41,12 @@ function ReflectionList({ history }) {
                   {"☆".repeat(Math.max(0, 5 - ref.rating))}
                 </span>
                 {ref.mood && (
-                  <span className="mood-badge">
-                    <span className="mood-badge-dot" aria-hidden="true" />
-                    {ref.mood}
-                  </span>
+                  <>
+                    <span className="meta-separator" aria-hidden="true">·</span>
+                    <span className="reflection-mood">
+                      Mood: <strong>{ref.mood}</strong>
+                    </span>
+                  </>
                 )}
               </div>
 
@@ -64,7 +67,7 @@ function ReflectionList({ history }) {
               {ref.tags && ref.tags.length > 0 && (
                 <div className="reflection-tags">
                   {ref.tags.map((tag, idx) => (
-                    <span key={idx} className="tag-pill">
+                    <span key={idx} className="reflection-tag-text">
                       #{tag}
                     </span>
                   ))}

@@ -1,25 +1,42 @@
 /* ==========================================================================
    Shelf Life Application Styles
-   Crafted following Emil Kowalski's Design Engineering & Frontend Taste Guidelines
+   Full-Bleed Archival Layout & Clean Typography (Pill Elements Removed)
    ========================================================================== */
 
-/* Layout Container */
+/* Full Viewport App Wrapper */
 .shelf-app {
-  max-width: 1240px;
-  margin: 0 auto;
-  padding: 32px 24px 64px;
+  width: 100%;
+  min-height: 100vh;
+  display: flex;
+  flex-direction: column;
+  background-color: var(--bg-canvas);
 }
 
 /* ==========================================================================
-   App Masthead
+   Full-Width Edge-to-Edge Masthead (Anchored to top)
    ========================================================================== */
 .app-masthead {
-  margin-bottom: 32px;
-  padding-bottom: 24px;
+  width: 100%;
+  background-color: var(--bg-surface);
   border-bottom: 1px solid var(--border-subtle);
+  padding: 16px 48px;
+  box-shadow: 0 1px 3px rgba(27, 33, 30, 0.03);
+  position: sticky;
+  top: 0;
+  z-index: 10;
+}
+
+@media (max-width: 768px) {
+  .app-masthead {
+    padding: 14px 20px;
+    position: static;
+  }
 }
 
 .masthead-inner {
+  max-width: 1680px;
+  width: 100%;
+  margin: 0 auto;
   display: flex;
   align-items: center;
   justify-content: space-between;
@@ -34,11 +51,11 @@
 }
 
 .brand-symbol {
-  width: 44px;
-  height: 44px;
+  width: 40px;
+  height: 40px;
   background-color: var(--accent-primary);
   color: var(--text-inverse);
-  border-radius: var(--radius-md);
+  border-radius: var(--radius-sm);
   display: flex;
   align-items: center;
   justify-content: center;
@@ -48,7 +65,7 @@
 
 .brand-title {
   font-family: var(--font-display);
-  font-size: 2rem;
+  font-size: 1.85rem;
   font-weight: 700;
   letter-spacing: -0.02em;
   margin: 0;
@@ -58,37 +75,33 @@
 
 .brand-tagline {
   margin: 2px 0 0 0;
-  font-size: 0.875rem;
+  font-size: 0.825rem;
   color: var(--text-muted);
   font-weight: 500;
 }
 
-.user-profile-badge {
+/* User Profile Meta (Clean text without pill border) */
+.user-profile-meta {
   display: flex;
   align-items: center;
   gap: 12px;
-  background-color: var(--bg-surface);
-  border: 1px solid var(--border-subtle);
-  padding: 8px 14px;
-  border-radius: var(--radius-pill);
-  box-shadow: var(--shadow-sm);
 }
 
 .user-avatar {
-  width: 32px;
-  height: 32px;
-  border-radius: 50%;
-  background-color: var(--accent-amber-subtle);
-  color: var(--accent-amber);
+  width: 34px;
+  height: 34px;
+  border-radius: var(--radius-sm);
+  background-color: var(--accent-subtle);
+  color: var(--accent-primary);
   font-weight: 700;
-  font-size: 0.95rem;
+  font-size: 0.9rem;
   display: flex;
   align-items: center;
   justify-content: center;
-  border: 1px solid rgba(184, 109, 38, 0.2);
+  border: 1px solid rgba(28, 61, 53, 0.15);
 }
 
-.user-meta {
+.user-details {
   display: flex;
   flex-direction: column;
 }
@@ -109,19 +122,33 @@
 }
 
 /* ==========================================================================
-   Two-Column Main Workspace
+   Main Content Workspace (Balanced & Full Width)
    ========================================================================== */
 .app-main-layout {
+  flex: 1;
+  width: 100%;
+  max-width: 1680px;
+  margin: 0 auto;
+  padding: 32px 48px 64px;
   display: grid;
-  grid-template-columns: minmax(340px, 440px) 1fr;
-  gap: 32px;
+  grid-template-columns: 460px 1fr;
+  gap: 36px;
   align-items: start;
 }
 
-@media (max-width: 900px) {
+@media (max-width: 1080px) {
+  .app-main-layout {
+    grid-template-columns: 380px 1fr;
+    gap: 28px;
+    padding: 24px 32px 48px;
+  }
+}
+
+@media (max-width: 860px) {
   .app-main-layout {
     grid-template-columns: 1fr;
-    gap: 28px;
+    padding: 20px 20px 48px;
+    gap: 24px;
   }
 }
 
@@ -131,7 +158,7 @@
 .shelf-column {
   display: flex;
   flex-direction: column;
-  gap: 20px;
+  gap: 22px;
 }
 
 .shelf-header-group {
@@ -140,7 +167,7 @@
 
 .shelf-header-group h2 {
   font-family: var(--font-display);
-  font-size: 1.5rem;
+  font-size: 1.55rem;
   font-weight: 600;
   color: var(--text-primary);
   margin: 0 0 4px 0;
@@ -171,7 +198,7 @@
   border: 1px solid var(--border-subtle);
   border-radius: var(--radius-md);
   padding: 14px 16px;
-  gap: 12px;
+  gap: 14px;
   box-shadow: var(--shadow-sm);
   transition: transform var(--duration-fast) var(--ease-out),
               border-color var(--duration-fast) var(--ease-out),
@@ -186,7 +213,7 @@
   width: 4px;
   align-self: stretch;
   background-color: var(--border-medium);
-  border-radius: var(--radius-pill);
+  border-radius: 2px;
   transition: background-color var(--duration-fast) var(--ease-out);
   flex-shrink: 0;
 }
@@ -233,42 +260,45 @@
   display: flex;
   align-items: center;
   justify-content: center;
-  opacity: 0.5;
+  opacity: 0.4;
   transition: transform var(--duration-fast) var(--ease-out),
               opacity var(--duration-fast) var(--ease-out);
 }
 
-/* Status Badges */
-.book-status-badge {
-  font-size: 0.72rem;
+/* Book Status Tag (Clean inline label with dot indicator; pill removed) */
+.book-status-tag {
+  display: inline-flex;
+  align-items: center;
+  gap: 5px;
+  font-size: 0.75rem;
   font-weight: 600;
   text-transform: capitalize;
-  padding: 2px 8px;
-  border-radius: var(--radius-pill);
+  letter-spacing: 0.01em;
+  color: var(--text-secondary);
   flex-shrink: 0;
-  letter-spacing: 0.02em;
 }
 
-.status-read {
-  background-color: var(--status-read-bg);
-  color: var(--status-read-text);
-  border: 1px solid var(--status-read-border);
+.status-indicator-dot {
+  width: 6px;
+  height: 6px;
+  border-radius: 50%;
+  background-color: var(--text-muted);
 }
 
-.status-reading {
-  background-color: var(--status-reading-bg);
-  color: var(--status-reading-text);
-  border: 1px solid var(--status-reading-border);
+.status-read .status-indicator-dot {
+  background-color: var(--status-read-text);
 }
 
-.status-to-read,
-.status-want-to-read {
-  background-color: var(--status-toread-bg);
-  color: var(--status-toread-text);
-  border: 1px solid var(--status-toread-border);
+.status-reading .status-indicator-dot {
+  background-color: var(--status-reading-text);
 }
 
-/* Book Card Hover (Gated for fine pointers) */
+.status-to-read .status-indicator-dot,
+.status-want-to-read .status-indicator-dot {
+  background-color: var(--status-toread-text);
+}
+
+/* Book Card Hover */
 @media (hover: hover) and (pointer: fine) {
   .book-card:hover {
     transform: translateY(-2px);
@@ -286,7 +316,7 @@
   }
 }
 
-/* Book Card Active State - Tactile press feedback */
+/* Book Card Active State */
 .book-card:active {
   transform: scale(0.985);
 }
@@ -312,13 +342,13 @@
 }
 
 /* ==========================================================================
-   Add Book Form
+   Add Book Form (Compact & Balanced)
    ========================================================================== */
 .add-book-form {
   background-color: var(--bg-surface);
   border: 1px solid var(--border-subtle);
   border-radius: var(--radius-lg);
-  padding: 20px;
+  padding: 18px 20px;
   box-shadow: var(--shadow-sm);
 }
 
@@ -326,13 +356,13 @@
   display: flex;
   align-items: center;
   gap: 12px;
-  margin-bottom: 16px;
+  margin-bottom: 14px;
 }
 
 .form-icon {
-  width: 32px;
-  height: 32px;
-  border-radius: var(--radius-sm);
+  width: 28px;
+  height: 28px;
+  border-radius: var(--radius-xs);
   background-color: var(--accent-subtle);
   color: var(--accent-primary);
   display: flex;
@@ -343,7 +373,7 @@
 
 .form-header h3 {
   margin: 0;
-  font-size: 1rem;
+  font-size: 0.975rem;
   font-weight: 600;
   color: var(--text-primary);
 }
@@ -357,7 +387,19 @@
 .form-grid {
   display: flex;
   flex-direction: column;
-  gap: 12px;
+  gap: 10px;
+}
+
+.form-row-two-col {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 10px;
+}
+
+@media (max-width: 520px) {
+  .form-row-two-col {
+    grid-template-columns: 1fr;
+  }
 }
 
 .form-group {
@@ -367,7 +409,7 @@
 }
 
 .form-group label {
-  font-size: 0.8rem;
+  font-size: 0.775rem;
   font-weight: 600;
   color: var(--text-secondary);
 }
@@ -385,11 +427,11 @@
 .form-group input,
 .form-group textarea {
   width: 100%;
-  padding: 9px 12px;
+  padding: 8px 10px;
   border: 1px solid var(--border-subtle);
-  border-radius: var(--radius-sm);
+  border-radius: var(--radius-xs);
   font-family: inherit;
-  font-size: 0.9rem;
+  font-size: 0.875rem;
   color: var(--text-primary);
   background-color: var(--bg-surface-soft);
   transition: border-color var(--duration-fast) var(--ease-out),
@@ -411,10 +453,10 @@
 }
 
 .form-actions {
-  margin-top: 14px;
+  margin-top: 12px;
 }
 
-/* Primary Button Styling */
+/* Primary Button */
 .btn-primary {
   display: inline-flex;
   align-items: center;
@@ -422,8 +464,8 @@
   background-color: var(--accent-primary);
   color: var(--text-inverse);
   border: none;
-  padding: 10px 18px;
-  border-radius: var(--radius-sm);
+  padding: 10px 16px;
+  border-radius: var(--radius-xs);
   font-weight: 600;
   font-size: 0.875rem;
   cursor: pointer;
@@ -452,22 +494,22 @@
 
 /* ==========================================================================
    Reflections Column & Timeline
-   ========================================================================== */
+   ========================================================================= */
 .reflections-column {
-  min-height: 480px;
+  min-height: 520px;
 }
 
 .active-reflection-pane {
   display: flex;
   flex-direction: column;
-  gap: 20px;
+  gap: 24px;
 }
 
 .reflections-container {
   background-color: var(--bg-surface);
   border: 1px solid var(--border-subtle);
   border-radius: var(--radius-lg);
-  padding: 24px;
+  padding: 28px;
   box-shadow: var(--shadow-card);
 }
 
@@ -491,7 +533,7 @@
 
 .reflections-book-title {
   font-family: var(--font-display);
-  font-size: 1.6rem;
+  font-size: 1.75rem;
   font-weight: 700;
   margin: 0;
   color: var(--text-primary);
@@ -500,43 +542,43 @@
 
 .reflections-book-author {
   margin: 4px 0 0 0;
-  font-size: 0.9rem;
+  font-size: 0.95rem;
   color: var(--text-secondary);
 }
 
-.total-reads-badge {
+.total-reads-counter {
   display: flex;
   flex-direction: column;
   align-items: center;
   justify-content: center;
-  background-color: var(--accent-subtle);
-  border: 1px solid rgba(28, 61, 53, 0.15);
-  border-radius: var(--radius-md);
-  padding: 6px 14px;
-  min-width: 72px;
+  background-color: var(--bg-surface-soft);
+  border: 1px solid var(--border-subtle);
+  border-radius: var(--radius-sm);
+  padding: 8px 16px;
+  min-width: 80px;
 }
 
 .total-reads-num {
   font-family: var(--font-display);
-  font-size: 1.35rem;
+  font-size: 1.45rem;
   font-weight: 700;
   color: var(--accent-primary);
   line-height: 1;
 }
 
 .total-reads-label {
-  font-size: 0.7rem;
+  font-size: 0.675rem;
   font-weight: 600;
-  color: var(--accent-primary);
+  color: var(--text-muted);
   text-transform: uppercase;
   letter-spacing: 0.04em;
-  margin-top: 2px;
+  margin-top: 3px;
 }
 
 .reflections-divider {
   height: 1px;
   background-color: var(--border-subtle);
-  margin: 18px 0;
+  margin: 20px 0;
 }
 
 .reflections-list {
@@ -545,30 +587,33 @@
   gap: 14px;
 }
 
-/* Individual Reflection Card */
+/* Individual Reflection Card (Clean metadata, pills removed) */
 .reflection-card {
   background-color: var(--bg-surface-soft);
   border: 1px solid var(--border-subtle);
   border-radius: var(--radius-md);
-  padding: 16px;
+  padding: 18px 20px;
   transition: border-color var(--duration-fast) var(--ease-out);
 }
 
 .reflection-card-meta {
   display: flex;
   align-items: center;
-  gap: 10px;
+  gap: 8px;
   flex-wrap: wrap;
-  margin-bottom: 10px;
+  margin-bottom: 12px;
 }
 
-.read-number-badge {
-  font-size: 0.75rem;
+.read-number-text {
+  font-size: 0.85rem;
   font-weight: 700;
-  background-color: var(--bg-subtle);
   color: var(--text-primary);
-  padding: 2px 8px;
-  border-radius: var(--radius-pill);
+  letter-spacing: -0.01em;
+}
+
+.meta-separator {
+  color: var(--border-medium);
+  font-size: 0.85rem;
 }
 
 .rating-stars {
@@ -577,24 +622,16 @@
   letter-spacing: 2px;
 }
 
-.mood-badge {
-  display: inline-flex;
-  align-items: center;
-  gap: 5px;
-  font-size: 0.775rem;
+/* Mood as clean text (No pill capsule) */
+.reflection-mood {
+  font-size: 0.825rem;
   color: var(--text-secondary);
-  background-color: var(--bg-surface);
-  border: 1px solid var(--border-subtle);
-  padding: 2px 8px;
-  border-radius: var(--radius-pill);
-  text-transform: capitalize;
 }
 
-.mood-badge-dot {
-  width: 6px;
-  height: 6px;
-  border-radius: 50%;
-  background-color: var(--accent-primary);
+.reflection-mood strong {
+  color: var(--text-primary);
+  font-weight: 600;
+  text-transform: capitalize;
 }
 
 /* Blockquote */
@@ -608,7 +645,7 @@
   margin: 10px 0;
   padding: 4px 0 4px 14px;
   background: rgba(184, 109, 38, 0.04);
-  border-radius: 0 var(--radius-sm) var(--radius-sm) 0;
+  border-radius: 0 var(--radius-xs) var(--radius-xs) 0;
 }
 
 .quote-mark {
@@ -622,25 +659,22 @@
 
 .reflection-thoughts p {
   margin: 0;
-  font-size: 0.9rem;
+  font-size: 0.925rem;
   line-height: 1.55;
   color: var(--text-secondary);
 }
 
 .reflection-tags {
   display: flex;
-  gap: 6px;
+  gap: 10px;
   flex-wrap: wrap;
   margin-top: 10px;
 }
 
-.tag-pill {
-  font-size: 0.725rem;
-  color: var(--text-muted);
-  background-color: var(--bg-subtle);
-  padding: 2px 8px;
-  border-radius: var(--radius-pill);
-  font-weight: 500;
+.reflection-tag-text {
+  font-size: 0.8rem;
+  color: var(--accent-amber);
+  font-weight: 600;
 }
 
 /* ==========================================================================
@@ -650,28 +684,11 @@
   background-color: var(--bg-surface);
   border: 1px solid var(--border-subtle);
   border-radius: var(--radius-lg);
-  padding: 22px;
+  padding: 24px;
   box-shadow: var(--shadow-sm);
   display: flex;
   flex-direction: column;
   gap: 14px;
-}
-
-.reflection-form-header {
-  display: flex;
-  align-items: center;
-  gap: 12px;
-}
-
-.reflection-form-badge {
-  background-color: var(--accent-subtle);
-  color: var(--accent-primary);
-  font-weight: 700;
-  font-size: 0.8rem;
-  padding: 4px 10px;
-  border-radius: var(--radius-pill);
-  border: 1px solid rgba(28, 61, 53, 0.15);
-  flex-shrink: 0;
 }
 
 .reflection-form-header h4 {
@@ -706,7 +723,7 @@
 }
 
 .rating-number-input {
-  width: 64px !important;
+  width: 60px !important;
   text-align: center;
   font-weight: 600;
 }
@@ -750,7 +767,7 @@
   background-color: var(--bg-surface);
   border: 1px dashed var(--border-medium);
   border-radius: var(--radius-lg);
-  padding: 48px 32px;
+  padding: 64px 36px;
   text-align: center;
   display: flex;
   flex-direction: column;
@@ -762,7 +779,7 @@
 .placeholder-icon-wrap {
   width: 64px;
   height: 64px;
-  border-radius: 50%;
+  border-radius: var(--radius-sm);
   background-color: var(--bg-subtle);
   color: var(--accent-primary);
   display: flex;
@@ -792,7 +809,7 @@
   align-items: center;
   gap: 10px;
   padding: 12px 16px;
-  border-radius: var(--radius-md);
+  border-radius: var(--radius-sm);
   font-size: 0.875rem;
 }
 

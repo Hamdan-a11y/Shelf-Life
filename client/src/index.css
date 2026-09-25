@@ -5,9 +5,9 @@
   --font-sans: 'Plus Jakarta Sans', -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
 
   /* Palette: Warm Archival Paper & Deep Scholastic Pine */
-  --bg-canvas: #f8f6f0;
+  --bg-canvas: #f6f5f0;
   --bg-surface: #ffffff;
-  --bg-surface-soft: #fbfaf7;
+  --bg-surface-soft: #faf9f6;
   --bg-surface-elevated: #ffffff;
   --bg-subtle: #eeece4;
   --bg-subtle-hover: #e5e2d6;
@@ -29,17 +29,9 @@
   --accent-amber-subtle: #fbf3ea;
 
   /* Status Colors */
-  --status-read-bg: #eaf4ed;
   --status-read-text: #1b5e39;
-  --status-read-border: #c8e3cf;
-
-  --status-reading-bg: #fdf5e8;
   --status-reading-text: #965a12;
-  --status-reading-border: #f6deba;
-
-  --status-toread-bg: #edf2f7;
   --status-toread-text: #3b5269;
-  --status-toread-border: #d0dce7;
 
   /* Shadows (Tuned to warm paper) */
   --shadow-sm: 0 1px 2px rgba(27, 33, 30, 0.04), 0 1px 3px rgba(27, 33, 30, 0.05);
@@ -53,11 +45,11 @@
   --duration-fast: 160ms;
   --duration-normal: 240ms;
 
-  /* Radii */
+  /* Geometric Radii (Clean, rectangular modern architecture; pills removed) */
+  --radius-xs: 4px;
   --radius-sm: 6px;
-  --radius-md: 10px;
-  --radius-lg: 14px;
-  --radius-pill: 9999px;
+  --radius-md: 8px;
+  --radius-lg: 12px;
 }
 
 *, *::before, *::after {
@@ -74,12 +66,7 @@ html, body {
   -moz-osx-font-smoothing: grayscale;
   line-height: 1.5;
   min-height: 100vh;
-}
-
-/* Subtle archival texture */
-body {
-  background-image: radial-gradient(rgba(28, 61, 53, 0.02) 1px, transparent 0);
-  background-size: 24px 24px;
+  width: 100%;
 }
 
 /* Accessible focus styling */

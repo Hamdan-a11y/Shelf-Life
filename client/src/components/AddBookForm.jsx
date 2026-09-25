@@ -31,12 +31,10 @@ function AddBookForm({ onBookAdded }) {
         return res.json();
       })
       .then((savedBook) => {
-        // Clear the form inputs
         setTitle("");
         setAuthor("");
         setIsbn("");
         setIsSubmitting(false);
-        // Notify parent component!
         onBookAdded(savedBook);
       })
       .catch((err) => {
@@ -49,7 +47,7 @@ function AddBookForm({ onBookAdded }) {
     <form className="add-book-form" onSubmit={handleSubmit}>
       <div className="form-header">
         <div className="form-icon" aria-hidden="true">
-          <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2">
+          <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2">
             <path d="M12 5v14M5 12h14" strokeLinecap="round" strokeLinejoin="round" />
           </svg>
         </div>
@@ -60,7 +58,7 @@ function AddBookForm({ onBookAdded }) {
       </div>
 
       <div className="form-grid">
-        <div className="form-group">
+        <div className="form-group form-group-full">
           <label htmlFor="book-title-input">
             Title <span className="required-star">*</span>
           </label>
@@ -74,31 +72,33 @@ function AddBookForm({ onBookAdded }) {
           />
         </div>
 
-        <div className="form-group">
-          <label htmlFor="book-author-input">
-            Author <span className="required-star">*</span>
-          </label>
-          <input
-            id="book-author-input"
-            type="text"
-            placeholder="e.g. F. Scott Fitzgerald"
-            value={author}
-            onChange={(e) => setAuthor(e.target.value)}
-            required
-          />
-        </div>
+        <div className="form-row-two-col">
+          <div className="form-group">
+            <label htmlFor="book-author-input">
+              Author <span className="required-star">*</span>
+            </label>
+            <input
+              id="book-author-input"
+              type="text"
+              placeholder="e.g. F. Scott Fitzgerald"
+              value={author}
+              onChange={(e) => setAuthor(e.target.value)}
+              required
+            />
+          </div>
 
-        <div className="form-group">
-          <label htmlFor="book-isbn-input">
-            ISBN <span className="optional-tag">(optional)</span>
-          </label>
-          <input
-            id="book-isbn-input"
-            type="text"
-            placeholder="e.g. 978-0743273565"
-            value={isbn}
-            onChange={(e) => setIsbn(e.target.value)}
-          />
+          <div className="form-group">
+            <label htmlFor="book-isbn-input">
+              ISBN <span className="optional-tag">(optional)</span>
+            </label>
+            <input
+              id="book-isbn-input"
+              type="text"
+              placeholder="e.g. 978-0743273565"
+              value={isbn}
+              onChange={(e) => setIsbn(e.target.value)}
+            />
+          </div>
         </div>
       </div>
 
