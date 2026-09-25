@@ -1,177 +1,845 @@
-.header h1 {
-  color: black;
+/* ==========================================================================
+   Shelf Life Application Styles
+   Crafted following Emil Kowalski's Design Engineering & Frontend Taste Guidelines
+   ========================================================================== */
+
+/* Layout Container */
+.shelf-app {
+  max-width: 1240px;
+  margin: 0 auto;
+  padding: 32px 24px 64px;
 }
 
-.header p {
-  color: black;
-}
-.book-card {
-  border: 1px solid #ddd;
-  border-radius: 6px;
-  padding: 12px 16px;
-  margin: 12px 0;
-  background-color: #f9f9f9;
-  color: #333;
+/* ==========================================================================
+   App Masthead
+   ========================================================================== */
+.app-masthead {
+  margin-bottom: 32px;
+  padding-bottom: 24px;
+  border-bottom: 1px solid var(--border-subtle);
 }
 
-.book-card h3 {
-  margin: 0 0 6px 0;
+.masthead-inner {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 20px;
+  flex-wrap: wrap;
 }
 
-.book-status {
-  font-weight: bold;
+.brand-group {
+  display: flex;
+  align-items: center;
+  gap: 14px;
 }
-.error-msg {
-  color: #ef4444;
+
+.brand-symbol {
+  width: 44px;
+  height: 44px;
+  background-color: var(--accent-primary);
+  color: var(--text-inverse);
+  border-radius: var(--radius-md);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  box-shadow: var(--shadow-sm);
+  flex-shrink: 0;
+}
+
+.brand-title {
+  font-family: var(--font-display);
+  font-size: 2rem;
+  font-weight: 700;
+  letter-spacing: -0.02em;
+  margin: 0;
+  color: var(--text-primary);
+  line-height: 1.1;
+}
+
+.brand-tagline {
+  margin: 2px 0 0 0;
+  font-size: 0.875rem;
+  color: var(--text-muted);
   font-weight: 500;
-  background-color: #fee2e2;
-  padding: 8px 12px;
-  border-radius: 4px;
 }
 
-.loading-msg {
-  color: #64748b;
-  font-style: italic;
+.user-profile-badge {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  background-color: var(--bg-surface);
+  border: 1px solid var(--border-subtle);
+  padding: 8px 14px;
+  border-radius: var(--radius-pill);
+  box-shadow: var(--shadow-sm);
 }
-.clickable {
+
+.user-avatar {
+  width: 32px;
+  height: 32px;
+  border-radius: 50%;
+  background-color: var(--accent-amber-subtle);
+  color: var(--accent-amber);
+  font-weight: 700;
+  font-size: 0.95rem;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border: 1px solid rgba(184, 109, 38, 0.2);
+}
+
+.user-meta {
+  display: flex;
+  flex-direction: column;
+}
+
+.user-greeting {
+  font-size: 0.85rem;
+  color: var(--text-secondary);
+}
+
+.user-greeting strong {
+  color: var(--text-primary);
+}
+
+.shelf-counter {
+  font-size: 0.75rem;
+  color: var(--text-muted);
+  font-weight: 500;
+}
+
+/* ==========================================================================
+   Two-Column Main Workspace
+   ========================================================================== */
+.app-main-layout {
+  display: grid;
+  grid-template-columns: minmax(340px, 440px) 1fr;
+  gap: 32px;
+  align-items: start;
+}
+
+@media (max-width: 900px) {
+  .app-main-layout {
+    grid-template-columns: 1fr;
+    gap: 28px;
+  }
+}
+
+/* ==========================================================================
+   Shelf Column
+   ========================================================================== */
+.shelf-column {
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
+}
+
+.shelf-header-group {
+  margin-top: 4px;
+}
+
+.shelf-header-group h2 {
+  font-family: var(--font-display);
+  font-size: 1.5rem;
+  font-weight: 600;
+  color: var(--text-primary);
+  margin: 0 0 4px 0;
+  letter-spacing: -0.01em;
+}
+
+.shelf-subtitle {
+  margin: 0;
+  font-size: 0.85rem;
+  color: var(--text-muted);
+}
+
+/* Books List */
+.books-list {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+}
+
+/* ==========================================================================
+   Book Card Component
+   ========================================================================== */
+.book-card {
+  position: relative;
+  display: flex;
+  align-items: center;
+  background-color: var(--bg-surface);
+  border: 1px solid var(--border-subtle);
+  border-radius: var(--radius-md);
+  padding: 14px 16px;
+  gap: 12px;
+  box-shadow: var(--shadow-sm);
+  transition: transform var(--duration-fast) var(--ease-out),
+              border-color var(--duration-fast) var(--ease-out),
+              box-shadow var(--duration-fast) var(--ease-out),
+              background-color var(--duration-fast) var(--ease-out);
   cursor: pointer;
-  transition: transform 0.15s ease, border-color 0.15s ease;
+  user-select: none;
 }
 
-.clickable:hover {
-  transform: translateY(-2px);
-  border-color: #3b82f6;
+/* Book Spine Visual Accent */
+.book-spine-indicator {
+  width: 4px;
+  align-self: stretch;
+  background-color: var(--border-medium);
+  border-radius: var(--radius-pill);
+  transition: background-color var(--duration-fast) var(--ease-out);
+  flex-shrink: 0;
 }
 
-.reflections-container {
-  margin-top: 30px;
-  padding: 16px;
-  background-color: #f1f5f9;
-  border-radius: 8px;
-  border: 1px solid #cbd5e1;
+.book-card-main {
+  flex: 1;
+  min-width: 0;
 }
 
-.reflections-container h3 {
-  margin-top: 0;
-  color: #1e293b;
+.book-card-top {
+  display: flex;
+  align-items: baseline;
+  justify-content: space-between;
+  gap: 10px;
+  margin-bottom: 4px;
 }
 
-.total-reads {
-  color: #475569;
-  font-weight: bold;
+.book-title {
+  font-family: var(--font-display);
+  font-size: 1.15rem;
+  font-weight: 600;
+  margin: 0;
+  color: var(--text-primary);
+  line-height: 1.25;
+  letter-spacing: -0.01em;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
 }
 
-.reflection-card {
-  background: white;
-  border: 1px solid #e2e8f0;
-  border-radius: 6px;
-  padding: 12px;
-  margin-bottom: 12px;
-  color: #334155;
+.book-author {
+  margin: 0;
+  font-size: 0.85rem;
+  color: var(--text-secondary);
 }
 
-.reflection-card h4 {
-  margin: 0 0 8px 0;
-  color: #0f172a;
-}
-
-.quote {
+.book-author .by-label {
+  color: var(--text-muted);
   font-style: italic;
-  color: #475569;
-  border-left: 3px solid #3b82f6;
-  margin: 8px 0;
-  padding-left: 10px;
 }
-.reflection-form {
-  background-color: white;
+
+.book-card-arrow {
+  color: var(--text-muted);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  opacity: 0.5;
+  transition: transform var(--duration-fast) var(--ease-out),
+              opacity var(--duration-fast) var(--ease-out);
+}
+
+/* Status Badges */
+.book-status-badge {
+  font-size: 0.72rem;
+  font-weight: 600;
+  text-transform: capitalize;
+  padding: 2px 8px;
+  border-radius: var(--radius-pill);
+  flex-shrink: 0;
+  letter-spacing: 0.02em;
+}
+
+.status-read {
+  background-color: var(--status-read-bg);
+  color: var(--status-read-text);
+  border: 1px solid var(--status-read-border);
+}
+
+.status-reading {
+  background-color: var(--status-reading-bg);
+  color: var(--status-reading-text);
+  border: 1px solid var(--status-reading-border);
+}
+
+.status-to-read,
+.status-want-to-read {
+  background-color: var(--status-toread-bg);
+  color: var(--status-toread-text);
+  border: 1px solid var(--status-toread-border);
+}
+
+/* Book Card Hover (Gated for fine pointers) */
+@media (hover: hover) and (pointer: fine) {
+  .book-card:hover {
+    transform: translateY(-2px);
+    border-color: var(--border-medium);
+    box-shadow: var(--shadow-md);
+  }
+
+  .book-card:hover .book-spine-indicator {
+    background-color: var(--accent-primary);
+  }
+
+  .book-card:hover .book-card-arrow {
+    opacity: 1;
+    transform: translateX(2px);
+  }
+}
+
+/* Book Card Active State - Tactile press feedback */
+.book-card:active {
+  transform: scale(0.985);
+}
+
+/* Book Card Selected State */
+.book-card.selected {
+  border-color: var(--accent-primary);
+  background-color: var(--accent-subtle);
+  box-shadow: var(--shadow-sm);
+}
+
+.book-card.selected .book-spine-indicator {
+  background-color: var(--accent-primary);
+}
+
+.book-card.selected .book-title {
+  color: var(--accent-primary);
+}
+
+.book-card.selected .book-card-arrow {
+  color: var(--accent-primary);
+  opacity: 1;
+}
+
+/* ==========================================================================
+   Add Book Form
+   ========================================================================== */
+.add-book-form {
+  background-color: var(--bg-surface);
+  border: 1px solid var(--border-subtle);
+  border-radius: var(--radius-lg);
   padding: 20px;
-  margin-top: 14px;
+  box-shadow: var(--shadow-sm);
+}
+
+.form-header {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  margin-bottom: 16px;
+}
+
+.form-icon {
+  width: 32px;
+  height: 32px;
+  border-radius: var(--radius-sm);
+  background-color: var(--accent-subtle);
+  color: var(--accent-primary);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-shrink: 0;
+}
+
+.form-header h3 {
+  margin: 0;
+  font-size: 1rem;
+  font-weight: 600;
+  color: var(--text-primary);
+}
+
+.form-subtitle {
+  margin: 1px 0 0 0;
+  font-size: 0.775rem;
+  color: var(--text-muted);
+}
+
+.form-grid {
   display: flex;
   flex-direction: column;
   gap: 12px;
 }
 
-.reflection-form h4 {
-  margin: 0;
-}
-
-.reflection-form label {
-  display: flex;
-  flex-direction: column;
-  font-weight: 500;
-  
-  font-size: 0.9rem;
-  gap: 3px;
-}
-
-.reflection-form input,
-.reflection-form textarea {
-  padding: 8px;
-  border: 1px solid #cbd5e1;
-  border-radius: 4px;
-  font-family: inherit;
-  font-size: 0.95rem;
-}
-
-.reflection-form button {
-  background-color: gray;
-  color: white;
-  border: 1px;
-  padding: 10px 14px;
-  border-radius: 5px;
-  cursor: pointer;
-  font-weight: 600;
-  margin-top: 6px;
-}
-
-.reflection-form button:hover {
-  background-color: black;
-}
-.add-book-form {
-  background-color: white;
-  border: 1px solid #cbd5e1;
-  border-radius: 8px;
-  padding: 16px;
-  margin-bottom: 24px;
-}
-
-.add-book-form h3 {
-  margin-top: 0;
-  margin-bottom: 12px;
-  color: #1e293b;
-}
-
 .form-group {
   display: flex;
   flex-direction: column;
-  margin-bottom: 10px;
+  gap: 4px;
 }
 
 .form-group label {
-  font-size: 0.85rem;
+  font-size: 0.8rem;
   font-weight: 600;
-  color: #475569;
-  margin-bottom: 4px;
+  color: var(--text-secondary);
 }
 
-.form-group input {
-  padding: 8px 10px;
-  border: 1px solid #cbd5e1;
-  border-radius: 4px;
-  font-size: 0.95rem;
+.required-star {
+  color: #dc2626;
 }
 
-.add-book-form button {
-  background-color: #0f172a;
-  color: white;
+.optional-tag {
+  font-weight: 400;
+  color: var(--text-muted);
+  font-size: 0.75rem;
+}
+
+.form-group input,
+.form-group textarea {
+  width: 100%;
+  padding: 9px 12px;
+  border: 1px solid var(--border-subtle);
+  border-radius: var(--radius-sm);
+  font-family: inherit;
+  font-size: 0.9rem;
+  color: var(--text-primary);
+  background-color: var(--bg-surface-soft);
+  transition: border-color var(--duration-fast) var(--ease-out),
+              background-color var(--duration-fast) var(--ease-out),
+              box-shadow var(--duration-fast) var(--ease-out);
+}
+
+.form-group input:focus,
+.form-group textarea:focus {
+  outline: none;
+  border-color: var(--border-focus);
+  background-color: var(--bg-surface);
+  box-shadow: 0 0 0 3px rgba(28, 61, 53, 0.12);
+}
+
+.form-group input::placeholder,
+.form-group textarea::placeholder {
+  color: #a0aaa4;
+}
+
+.form-actions {
+  margin-top: 14px;
+}
+
+/* Primary Button Styling */
+.btn-primary {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  background-color: var(--accent-primary);
+  color: var(--text-inverse);
   border: none;
-  padding: 9px 15px;
-  border-radius: 5px;
+  padding: 10px 18px;
+  border-radius: var(--radius-sm);
   font-weight: 600;
+  font-size: 0.875rem;
   cursor: pointer;
-  margin-top: 6px;
+  transition: background-color var(--duration-fast) var(--ease-out),
+              transform var(--duration-fast) var(--ease-out),
+              box-shadow var(--duration-fast) var(--ease-out);
+  box-shadow: var(--shadow-sm);
+  width: 100%;
 }
 
-.add-book-form button:hover {
-  background-color: #334155;
+@media (hover: hover) and (pointer: fine) {
+  .btn-primary:hover:not(:disabled) {
+    background-color: var(--accent-primary-hover);
+    box-shadow: var(--shadow-md);
+  }
+}
+
+.btn-primary:active:not(:disabled) {
+  transform: scale(0.98);
+}
+
+.btn-primary:disabled {
+  opacity: 0.6;
+  cursor: not-allowed;
+}
+
+/* ==========================================================================
+   Reflections Column & Timeline
+   ========================================================================== */
+.reflections-column {
+  min-height: 480px;
+}
+
+.active-reflection-pane {
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
+}
+
+.reflections-container {
+  background-color: var(--bg-surface);
+  border: 1px solid var(--border-subtle);
+  border-radius: var(--radius-lg);
+  padding: 24px;
+  box-shadow: var(--shadow-card);
+}
+
+.reflections-header {
+  display: flex;
+  align-items: flex-start;
+  justify-content: space-between;
+  gap: 16px;
+  flex-wrap: wrap;
+}
+
+.reflections-eyebrow {
+  display: block;
+  font-size: 0.725rem;
+  text-transform: uppercase;
+  letter-spacing: 0.08em;
+  font-weight: 700;
+  color: var(--accent-amber);
+  margin-bottom: 2px;
+}
+
+.reflections-book-title {
+  font-family: var(--font-display);
+  font-size: 1.6rem;
+  font-weight: 700;
+  margin: 0;
+  color: var(--text-primary);
+  line-height: 1.2;
+}
+
+.reflections-book-author {
+  margin: 4px 0 0 0;
+  font-size: 0.9rem;
+  color: var(--text-secondary);
+}
+
+.total-reads-badge {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  background-color: var(--accent-subtle);
+  border: 1px solid rgba(28, 61, 53, 0.15);
+  border-radius: var(--radius-md);
+  padding: 6px 14px;
+  min-width: 72px;
+}
+
+.total-reads-num {
+  font-family: var(--font-display);
+  font-size: 1.35rem;
+  font-weight: 700;
+  color: var(--accent-primary);
+  line-height: 1;
+}
+
+.total-reads-label {
+  font-size: 0.7rem;
+  font-weight: 600;
+  color: var(--accent-primary);
+  text-transform: uppercase;
+  letter-spacing: 0.04em;
+  margin-top: 2px;
+}
+
+.reflections-divider {
+  height: 1px;
+  background-color: var(--border-subtle);
+  margin: 18px 0;
+}
+
+.reflections-list {
+  display: flex;
+  flex-direction: column;
+  gap: 14px;
+}
+
+/* Individual Reflection Card */
+.reflection-card {
+  background-color: var(--bg-surface-soft);
+  border: 1px solid var(--border-subtle);
+  border-radius: var(--radius-md);
+  padding: 16px;
+  transition: border-color var(--duration-fast) var(--ease-out);
+}
+
+.reflection-card-meta {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  flex-wrap: wrap;
+  margin-bottom: 10px;
+}
+
+.read-number-badge {
+  font-size: 0.75rem;
+  font-weight: 700;
+  background-color: var(--bg-subtle);
+  color: var(--text-primary);
+  padding: 2px 8px;
+  border-radius: var(--radius-pill);
+}
+
+.rating-stars {
+  color: var(--accent-amber);
+  font-size: 0.95rem;
+  letter-spacing: 2px;
+}
+
+.mood-badge {
+  display: inline-flex;
+  align-items: center;
+  gap: 5px;
+  font-size: 0.775rem;
+  color: var(--text-secondary);
+  background-color: var(--bg-surface);
+  border: 1px solid var(--border-subtle);
+  padding: 2px 8px;
+  border-radius: var(--radius-pill);
+  text-transform: capitalize;
+}
+
+.mood-badge-dot {
+  width: 6px;
+  height: 6px;
+  border-radius: 50%;
+  background-color: var(--accent-primary);
+}
+
+/* Blockquote */
+.quote {
+  font-family: var(--font-display);
+  font-style: italic;
+  font-size: 1.05rem;
+  line-height: 1.45;
+  color: var(--text-primary);
+  border-left: 3px solid var(--accent-amber);
+  margin: 10px 0;
+  padding: 4px 0 4px 14px;
+  background: rgba(184, 109, 38, 0.04);
+  border-radius: 0 var(--radius-sm) var(--radius-sm) 0;
+}
+
+.quote-mark {
+  color: var(--accent-amber);
+  opacity: 0.7;
+}
+
+.reflection-thoughts {
+  margin-top: 8px;
+}
+
+.reflection-thoughts p {
+  margin: 0;
+  font-size: 0.9rem;
+  line-height: 1.55;
+  color: var(--text-secondary);
+}
+
+.reflection-tags {
+  display: flex;
+  gap: 6px;
+  flex-wrap: wrap;
+  margin-top: 10px;
+}
+
+.tag-pill {
+  font-size: 0.725rem;
+  color: var(--text-muted);
+  background-color: var(--bg-subtle);
+  padding: 2px 8px;
+  border-radius: var(--radius-pill);
+  font-weight: 500;
+}
+
+/* ==========================================================================
+   Add Reflection Form
+   ========================================================================== */
+.reflection-form {
+  background-color: var(--bg-surface);
+  border: 1px solid var(--border-subtle);
+  border-radius: var(--radius-lg);
+  padding: 22px;
+  box-shadow: var(--shadow-sm);
+  display: flex;
+  flex-direction: column;
+  gap: 14px;
+}
+
+.reflection-form-header {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+}
+
+.reflection-form-badge {
+  background-color: var(--accent-subtle);
+  color: var(--accent-primary);
+  font-weight: 700;
+  font-size: 0.8rem;
+  padding: 4px 10px;
+  border-radius: var(--radius-pill);
+  border: 1px solid rgba(28, 61, 53, 0.15);
+  flex-shrink: 0;
+}
+
+.reflection-form-header h4 {
+  margin: 0;
+  font-size: 1.05rem;
+  font-weight: 600;
+  color: var(--text-primary);
+}
+
+.reflection-form-subtext {
+  margin: 2px 0 0 0;
+  font-size: 0.8rem;
+  color: var(--text-muted);
+}
+
+.reflection-inputs-grid {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 14px;
+}
+
+@media (max-width: 600px) {
+  .reflection-inputs-grid {
+    grid-template-columns: 1fr;
+  }
+}
+
+.rating-interactive-row {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}
+
+.rating-number-input {
+  width: 64px !important;
+  text-align: center;
+  font-weight: 600;
+}
+
+.star-picker-buttons {
+  display: flex;
+  gap: 2px;
+}
+
+.star-pick-btn {
+  background: none;
+  border: none;
+  font-size: 1.25rem;
+  color: var(--border-medium);
+  cursor: pointer;
+  padding: 2px 4px;
+  border-radius: 4px;
+  transition: transform var(--duration-fast) var(--ease-out),
+              color var(--duration-fast) var(--ease-out);
+}
+
+.star-pick-btn.active {
+  color: var(--accent-amber);
+}
+
+@media (hover: hover) and (pointer: fine) {
+  .star-pick-btn:hover {
+    transform: scale(1.2);
+    color: var(--accent-amber);
+  }
+}
+
+.star-pick-btn:active {
+  transform: scale(0.9);
+}
+
+/* ==========================================================================
+   Empty States & Notices
+   ========================================================================== */
+.reflection-placeholder-card {
+  background-color: var(--bg-surface);
+  border: 1px dashed var(--border-medium);
+  border-radius: var(--radius-lg);
+  padding: 48px 32px;
+  text-align: center;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  color: var(--text-muted);
+}
+
+.placeholder-icon-wrap {
+  width: 64px;
+  height: 64px;
+  border-radius: 50%;
+  background-color: var(--bg-subtle);
+  color: var(--accent-primary);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  margin-bottom: 16px;
+}
+
+.reflection-placeholder-card h3 {
+  font-family: var(--font-display);
+  font-size: 1.35rem;
+  font-weight: 600;
+  color: var(--text-primary);
+  margin: 0 0 8px 0;
+}
+
+.reflection-placeholder-card p {
+  max-width: 44ch;
+  margin: 0;
+  font-size: 0.9rem;
+  line-height: 1.5;
+  color: var(--text-muted);
+}
+
+.state-notice {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  padding: 12px 16px;
+  border-radius: var(--radius-md);
+  font-size: 0.875rem;
+}
+
+.loading-notice {
+  background-color: var(--bg-surface);
+  border: 1px solid var(--border-subtle);
+}
+
+.spinner-indicator {
+  width: 16px;
+  height: 16px;
+  border: 2px solid var(--border-subtle);
+  border-top-color: var(--accent-primary);
+  border-radius: 50%;
+  animation: spin 0.6s linear infinite;
+  flex-shrink: 0;
+}
+
+@keyframes spin {
+  to {
+    transform: rotate(360deg);
+  }
+}
+
+.loading-msg {
+  margin: 0;
+  color: var(--text-muted);
+}
+
+.error-notice {
+  background-color: #fef2f2;
+  border: 1px solid #fecaca;
+  color: #991b1b;
+}
+
+.error-icon {
+  font-size: 1rem;
+}
+
+.error-msg {
+  margin: 0;
+  color: #991b1b;
+  font-weight: 500;
+}
+
+.empty-shelf-notice {
+  background-color: var(--bg-surface);
+  border: 1px solid var(--border-subtle);
+  color: var(--text-muted);
 }

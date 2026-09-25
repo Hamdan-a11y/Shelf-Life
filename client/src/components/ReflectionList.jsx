@@ -3,25 +3,76 @@ function ReflectionList({ history }) {
 
   return (
     <div className="reflections-container">
-      <h3>Reading History & Reflections for "{history.book.title}"</h3>
-      <p className="total-reads">Total times read: {history.total_reads}</p>
+      <div className="reflections-header">
+        <div>
+          <span className="reflections-eyebrow">Archival Log</span>
+          <h3 className="reflections-book-title">"{history.book.title}"</h3>
+          {history.book.author && (
+            <p className="reflections-book-author">by {history.book.author}</p>
+          )}
+        </div>
+        <div className="total-reads-badge">
+          <span className="total-reads-num">{history.total_reads}</span>
+          <span className="total-reads-label">
+            {history.total_reads === 1 ? "Read Completed" : "Reads Completed"}
+          </span>
+        </div>
+      </div>
+
+      <div className="reflections-divider" />
 
       {history.reflections.length === 0 ? (
-        <p className="loading-msg">No reflections recorded yet.</p>
+        <div className="reflections-empty-state">
+          <p className="loading-msg">No reflections recorded yet for this volume.</p>
+        </div>
       ) : (
-        history.reflections.map((ref) => (
-          <div key={ref._id} className="reflection-card">
-            <h4>Read #{ref.readNumber} — Rating: {"⭐".repeat(ref.rating)}</h4>
-            {ref.mood && <p><strong>Mood:</strong> {ref.mood}</p>}
-            {ref.favoriteQuote && (
-              <blockquote className="quote">"{ref.favoriteQuote}"</blockquote>
-            )}
-            {ref.thoughts && <p><strong>Thoughts:</strong> {ref.thoughts}</p>}
-            {ref.tags && ref.tags.length > 0 && (
-              <p><strong>Tags:</strong> {ref.tags.join(", ")}</p>
-            )}
-          </div>
-        ))
+        <div className="reflections-list">
+          {history.reflections.map((ref) => (
+            <article key={ref._id} className="reflection-card">
+              <div className="reflection-card-meta">
+                <span className="read-number-badge">Read #{ref.readNumber}</span>
+                <span
+                  className="rating-stars"
+                  aria-label={`Rating: ${ref.rating} out of 5 stars`}
+                  title={`${ref.rating} / 5 stars`}
+                >
+                  {"★".repeat(ref.rating)}
+                  {"☆".repeat(Math.max(0, 5 - ref.rating))}
+                </span>
+                {ref.mood && (
+                  <span className="mood-badge">
+                    <span className="mood-badge-dot" aria-hidden="true" />
+                    {ref.mood}
+                  </span>
+                )}
+              </div>
+
+              {ref.favoriteQuote && (
+                <blockquote className="quote">
+                  <span className="quote-mark" aria-hidden="true">“</span>
+                  {ref.favoriteQuote}
+                  <span className="quote-mark" aria-hidden="true">”</span>
+                </blockquote>
+              )}
+
+              {ref.thoughts && (
+                <div className="reflection-thoughts">
+                  <p>{ref.thoughts}</p>
+                </div>
+              )}
+
+              {ref.tags && ref.tags.length > 0 && (
+                <div className="reflection-tags">
+                  {ref.tags.map((tag, idx) => (
+                    <span key={idx} className="tag-pill">
+                      #{tag}
+                    </span>
+                  ))}
+                </div>
+              )}
+            </article>
+          ))}
+        </div>
       )}
     </div>
   );

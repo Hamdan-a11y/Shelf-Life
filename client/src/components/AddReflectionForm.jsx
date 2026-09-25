@@ -1,14 +1,15 @@
 import { useState } from "react";
 
-function AddReflectionForm({ bookId, onReflectionAdded, nextReadNumber,
- }) {
+function AddReflectionForm({ bookId, onReflectionAdded, nextReadNumber }) {
   const [rating, setRating] = useState(5);
   const [mood, setMood] = useState("");
   const [thoughts, setThoughts] = useState("");
+  const [isSubmitting, setIsSubmitting] = useState(false);
 
   function handleSubmit(e) {
-    e.preventDefault(); //Prevents the browser from reloading the page
+    e.preventDefault();
 
+    setIsSubmitting(true);
     const newReflection = {
       book_id: bookId,
       user_id: 1,
@@ -20,55 +21,96 @@ function AddReflectionForm({ bookId, onReflectionAdded, nextReadNumber,
 
     fetch("http://localhost:3000/api/reflections", {
       method: "POST",
-      headers: { "Content-Type": "application/json "},
+      headers: { "Content-Type": "application/json" },
       body: JSON.stringify(newReflection)
     })
-    .then((res) => {
-      if(!res.ok) throw new Error("Failed to save reflection");
-      return res.json();
-    })
-    .then((savedReflection) => {
-      //clear the form
-      setMood("");
-      setThoughts("");
-      //Notify parent to refresh reflections!
-      onReflectionAdded(savedReflection);
-    })
-    .catch((err) => console.error("Error saving reflection:", err))
+      .then((res) => {
+        if (!res.ok) throw new Error("Failed to save reflection");
+        return res.json();
+      })
+      .then((savedReflection) => {
+        // clear the form
+        setMood("");
+        setThoughts("");
+        setIsSubmitting(false);
+        // Notify parent to refresh reflections!
+        onReflectionAdded(savedReflection);
+      })
+      .catch((err) => {
+        console.error("Error saving reflection:", err);
+        setIsSubmitting(false);
+      });
   }
 
   return (
     <form className="reflection-form" onSubmit={handleSubmit}>
-      <h4>Log a New Reflection / Re-read</h4>
+      <div className="reflection-form-header">
+        <div className="reflection-form-badge">Read #{nextReadNumber || 1}</div>
+        <div>
+          <h4>Log a New Reflection / Re-read</h4>
+          <p className="reflection-form-subtext">Record your impressions, state of mind, and takeaways</p>
+        </div>
+      </div>
 
-      <label>
-        Rating (1-5):
-        <input
-        type="number"
-        min="1"
-        max="5"
-        value={rating}
-        onChange={(e) => setRating(e.target.value)}
-        />
-      </label>
-      <label>
-        Mood:
-        <input
-          type="text"
-          placeholder="e.g. nostalgic, inspired, gloomy"
-          value={mood}
-          onChange={(e) => setMood(e.target.value)}
-        />
-      </label>
-      <label>
-        Thoughts:
+      <div className="reflection-inputs-grid">
+        <div className="form-group rating-form-group">
+          <label htmlFor="reflection-rating-input">
+            Rating (1–5):
+          </label>
+          <div className="rating-interactive-row">
+            <input
+              id="reflection-rating-input"
+              type="number"
+              min="1"
+              max="5"
+              value={rating}
+              onChange={(e) => setRating(Number(e.target.value))}
+              className="rating-number-input"
+              required
+            />
+            <div className="star-picker-buttons" role="group" aria-label="Select rating in stars">
+              {[1, 2, 3, 4, 5].map((starVal) => (
+                <button
+                  type="button"
+                  key={starVal}
+                  className={`star-pick-btn ${starVal <= Number(rating) ? "active" : ""}`}
+                  onClick={() => setRating(starVal)}
+                  title={`${starVal} Star${starVal > 1 ? "s" : ""}`}
+                  aria-label={`${starVal} Star${starVal > 1 ? "s" : ""}`}
+                >
+                  ★
+                </button>
+              ))}
+            </div>
+          </div>
+        </div>
+
+        <div className="form-group">
+          <label htmlFor="reflection-mood-input">Mood:</label>
+          <input
+            id="reflection-mood-input"
+            type="text"
+            placeholder="e.g. nostalgic, inspired, reflective"
+            value={mood}
+            onChange={(e) => setMood(e.target.value)}
+          />
+        </div>
+      </div>
+
+      <div className="form-group">
+        <label htmlFor="reflection-thoughts-input">Thoughts &amp; Impressions:</label>
         <textarea
-          placeholder="How did this reading feel?"
+          id="reflection-thoughts-input"
+          rows={3}
+          placeholder="How did this reading feel? What resonated with you this time?"
           value={thoughts}
           onChange={(e) => setThoughts(e.target.value)}
         />
-      </label>
-      <button type="submit">Save Reflection to MongoDB</button>
+      </div>
+
+      <button type="submit" disabled={isSubmitting} className="btn-primary">
+        {isSubmitting ? "Recording..." : "Save Reflection to MongoDB"}
+      </button>
     </form>
   );
 }

@@ -1,0 +1,99 @@
+/* Design System Tokens - Shelf Life */
+:root {
+  /* Typography */
+  --font-display: 'Newsreader', Garamond, Georgia, serif;
+  --font-sans: 'Plus Jakarta Sans', -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
+
+  /* Palette: Warm Archival Paper & Deep Scholastic Pine */
+  --bg-canvas: #f8f6f0;
+  --bg-surface: #ffffff;
+  --bg-surface-soft: #fbfaf7;
+  --bg-surface-elevated: #ffffff;
+  --bg-subtle: #eeece4;
+  --bg-subtle-hover: #e5e2d6;
+
+  --border-subtle: #e4e0d4;
+  --border-medium: #cfc9ba;
+  --border-focus: #1c3d35;
+
+  --text-primary: #1a1e1d;
+  --text-secondary: #4a5450;
+  --text-muted: #74807a;
+  --text-inverse: #ffffff;
+
+  /* Accents */
+  --accent-primary: #1c3d35;
+  --accent-primary-hover: #132a24;
+  --accent-subtle: #e9f0ed;
+  --accent-amber: #b86d26;
+  --accent-amber-subtle: #fbf3ea;
+
+  /* Status Colors */
+  --status-read-bg: #eaf4ed;
+  --status-read-text: #1b5e39;
+  --status-read-border: #c8e3cf;
+
+  --status-reading-bg: #fdf5e8;
+  --status-reading-text: #965a12;
+  --status-reading-border: #f6deba;
+
+  --status-toread-bg: #edf2f7;
+  --status-toread-text: #3b5269;
+  --status-toread-border: #d0dce7;
+
+  /* Shadows (Tuned to warm paper) */
+  --shadow-sm: 0 1px 2px rgba(27, 33, 30, 0.04), 0 1px 3px rgba(27, 33, 30, 0.05);
+  --shadow-md: 0 4px 6px -1px rgba(27, 33, 30, 0.05), 0 2px 4px -2px rgba(27, 33, 30, 0.04);
+  --shadow-lg: 0 10px 15px -3px rgba(27, 33, 30, 0.06), 0 4px 6px -4px rgba(27, 33, 30, 0.03);
+  --shadow-card: 0 1px 3px rgba(27, 33, 30, 0.04), 0 4px 12px rgba(27, 33, 30, 0.03);
+
+  /* Animation Curves & Durations (Emil Kowalski Philosophy) */
+  --ease-out: cubic-bezier(0.23, 1, 0.32, 1);
+  --ease-spring: cubic-bezier(0.16, 1, 0.3, 1);
+  --duration-fast: 160ms;
+  --duration-normal: 240ms;
+
+  /* Radii */
+  --radius-sm: 6px;
+  --radius-md: 10px;
+  --radius-lg: 14px;
+  --radius-pill: 9999px;
+}
+
+*, *::before, *::after {
+  box-sizing: border-box;
+}
+
+html, body {
+  margin: 0;
+  padding: 0;
+  background-color: var(--bg-canvas);
+  color: var(--text-primary);
+  font-family: var(--font-sans);
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+  line-height: 1.5;
+  min-height: 100vh;
+}
+
+/* Subtle archival texture */
+body {
+  background-image: radial-gradient(rgba(28, 61, 53, 0.02) 1px, transparent 0);
+  background-size: 24px 24px;
+}
+
+/* Accessible focus styling */
+:focus-visible {
+  outline: 2px solid var(--accent-primary);
+  outline-offset: 2px;
+}
+
+/* Media query for reduced motion */
+@media (prefers-reduced-motion: reduce) {
+  *, *::before, *::after {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
+    scroll-behavior: auto !important;
+  }
+}
